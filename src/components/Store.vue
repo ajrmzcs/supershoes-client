@@ -213,7 +213,6 @@ export default {
           'Accept': 'application/json'
         }})
           .then(response => {
-            console.log(response)
             if (typeof response.data.success !== 'undefined' && response.data.success === true) {
               this.successMsg = response.data.msg
               $('.alert').show()
