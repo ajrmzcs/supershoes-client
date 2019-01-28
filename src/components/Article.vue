@@ -59,6 +59,7 @@
                 </tr>
                 </tbody>
               </table>
+              Total items: {{ total }}
             </div>
           </div>
           <div v-else>
@@ -141,15 +142,16 @@ export default {
   name: 'Store',
   data () {
     return {
-      url: 'http://supershoes.test/services/articles',
-      storeUrl: 'http://supershoes.test/services/stores',
+      url: 'http://localhost:8000/services/articles',
+      storeUrl: 'http://localhost:8000/services/stores',
       token: 'bXlfdXNlcjpteV9wYXNzd29yZA==',
       articles: [],
       stores: [],
       article: {},
       articleEdit: '',
       successMsg: '',
-      errors: []
+      errors: [],
+      total: ''
     }
   },
   mounted () {
@@ -164,8 +166,8 @@ export default {
         .then(response => {
           if (typeof response.data.success !== 'undefined' && response.data.success === true) {
             this.articles = response.data.articles
+            this.total = response.data.total_elements
           }
-          console.log(this.articles)
         })
         .catch(e => {
           console.log(e)
@@ -252,7 +254,6 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err.response.data.errors)
             this.setErrors(err.response.data.errors)
           })
       }

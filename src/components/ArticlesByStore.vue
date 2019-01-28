@@ -6,6 +6,12 @@
           Articles by Store
         </div>
         <div class="card-body">
+          <div v-if="errors.length > 0" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <p v-for="(error, key) in errors" :key="key">{{ error }}</p>
+            <button type="button" class="close" aria-label="Close" @click="closeAlert('error')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <div v-if="articles.length > 0">
             <div class="table-responsive">
               <table class="table">
@@ -32,6 +38,7 @@
                 </tr>
                 </tbody>
               </table>
+              Total items: {{ total }}
             </div>
           </div>
           <div v-else>
@@ -49,10 +56,12 @@ export default {
   name: 'Store',
   data () {
     return {
-      url: 'http://supershoes.test/services/articles/stores/',
+      url: 'http://localhost:8000/services/articles/stores/',
       token: 'bXlfdXNlcjpteV9wYXNzd29yZA==',
       articles: [],
-      id: ''
+      errors: [],
+      id: '',
+      total: ''
     }
   },
   mounted () {
@@ -67,12 +76,34 @@ export default {
         .then(response => {
           if (typeof response.data.success !== 'undefined' && response.data.success === true) {
             this.articles = response.data.articles
+            this.total = response.data.total_elements
           }
-          console.log(this.articles)
         })
-        .catch(e => {
-          console.log(e)
+        .catch(err => {
+          this.setErrors(err.response.data.errors)
         })
+    },
+    setErrors (error) {
+      this.errors = []
+      for (const value of Object.values(error)) {
+        this.errors.push(value[0])
+      }
+      $('.alert').show()
+      $('#articleModal').modal('hide')
+    },
+    closeAlert (type) {
+      switch (type) {
+        case 'success':
+          // clean messages on close
+          this.successMsg = ''
+          $('.alert-success').hide()
+          break
+        case 'error':
+          // clean messages on close
+          this.errors = []
+          $('.alert-danger').hide()
+          break
+      }
     }
   }
 }

@@ -55,6 +55,7 @@
                 </tr>
                 </tbody>
               </table>
+              Total items: {{ total }}
             </div>
           </div>
           <div v-else>
@@ -110,13 +111,14 @@ export default {
   name: 'Store',
   data () {
     return {
-      url: 'http://supershoes.test/services/stores',
+      url: 'http://localhost:8000/services/stores',
       token: 'bXlfdXNlcjpteV9wYXNzd29yZA==',
       stores: [],
       store: {},
       storeEdit: '',
       successMsg: '',
-      errors: []
+      errors: [],
+      total: ''
     }
   },
   mounted () {
@@ -130,6 +132,7 @@ export default {
         .then(response => {
           if (typeof response.data.success !== 'undefined' && response.data.success === true) {
             this.stores = response.data.stores
+            this.total = response.data.total_elements
           }
         })
         .catch(e => {
