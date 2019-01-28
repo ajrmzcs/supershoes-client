@@ -52,7 +52,9 @@ export default {
 .icon-default {
   color: lightgrey;
 }
-
+.icon-green {
+  color: forestgreen;
+}
 .hover-green:hover {
   color: forestgreen;
 }

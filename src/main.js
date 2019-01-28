@@ -8,10 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 // Font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEye, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faList, faEye, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faEye, faEdit, faTrashAlt)
+library.add(faPlus, faList, faEye, faEdit, faTrashAlt)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
